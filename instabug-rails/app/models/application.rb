@@ -4,7 +4,7 @@ class Application < ApplicationRecord
   validates :name, presence: true
   validates :token, presence: true, uniqueness: true
 
-  before_validation :generate_token , on: :create
+  before_validation :generate_token, on: :create
 
   private
 
