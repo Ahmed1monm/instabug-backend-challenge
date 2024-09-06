@@ -92,4 +92,14 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  Rails.application.configure do
+    config.cache_store = :redis_cache_store, {
+      url: ENV["REDIS_URL"] || "redis://localhost:6379",
+      expires_in: 1.hour, # Set expiration time for cache entries
+      driver: :ruby,
+      connect_timeout: 5, # Assuming you meant connection timeout
+      read_timeout: 5,
+      write_timeout: 5
+    }
+  end
 end
