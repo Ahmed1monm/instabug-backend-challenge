@@ -20,7 +20,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	db.InitDB("admin")
+	db.InitDB("instabug")
 	db.Migrate()
 
 	services.SetupRedis()

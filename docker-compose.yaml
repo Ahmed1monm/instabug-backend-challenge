@@ -4,22 +4,24 @@ services:
   app:
     build: 
       context: instabug-rails
-      dockerfile: instabug-rails/Dockerfile
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+      dockerfile: Dockerfile
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     ports:
       - "3000:3000"
     depends_on:
       - db
       - redis
       - elasticsearch
-      - writer-service
     environment:
       REDIS_URL: redis://redis:6379/0
       DATABASE_URL: mysql2://root:password@db/instabug_rails_development
       ELASTICSEARCH_URL: http://elasticsearch:9200
 
+
   db:
     image: mysql:9.0.1
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     environment:
@@ -30,6 +32,7 @@ services:
     image: redis:alpine
     volumes:
       - redis_data:/data
+
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
@@ -45,6 +48,7 @@ services:
     ports:
       - "9200:9200"
 
+
   writer-service:
     build:
       context: writer-service
@@ -54,17 +58,25 @@ services:
     ports:
       - "8080:8080"
     depends_on:
+      - db
       - elasticsearch
+      - redis
+      - app
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
+      DATABASE_URL: mysql2://root:password@db/instabug
+      REDIS_URL: redis:6379/0
+
+
 
   monitor:
-    image: hibiken/asynq:latest
+    image: hibiken/asynqmon:latest
     command: monitor
     ports:
-      - "8080:8080"
+      - "8081:8080" 
     depends_on:
       - writer-service
+
 
   worker1:
     build:
@@ -74,6 +86,12 @@ services:
     depends_on:
       - db
       - redis
+      - writer-service
+      - app
+    environment:
+      REDIS_URL: redis:6379
+      DATABASE_URL: mysql://root:password@db/instabug
+
 
   worker2:
     build:
@@ -83,6 +101,12 @@ services:
     depends_on:
       - db
       - redis
+      - writer-service
+      - app
+    environment:
+      REDIS_URL: redis:6379
+      DATABASE_URL: mysql://root:password@db/instabug
+
 
   nginx:
     image: nginx:latest

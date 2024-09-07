@@ -14,6 +14,7 @@ WORKDIR /rails
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl default-mysql-client libjemalloc2 libvips && \
+    apt-get install -y netcat && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -42,9 +43,6 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-
-
-
 # Final stage for app image
 FROM base
 
@@ -61,6 +59,8 @@ USER 1000:1000
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
+
+
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["sh", "-c", "export SECRET_KEY_BASE=$(openssl rand -hex 64) && bundle exec rails s -p 3000 -b '0.0.0.0'"]

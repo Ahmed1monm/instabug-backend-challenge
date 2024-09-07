@@ -1,5 +1,4 @@
-FROM golang:1.20-alpine
-
+FROM golang:1.23
 WORKDIR /app/writer
 
 COPY go.mod go.sum ./

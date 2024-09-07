@@ -19,7 +19,7 @@ const (
 func main() {
 	log.Println("Worker started")
 
-	db.InitDB("admin")
+	db.InitDB("instabug")
 	db.Migrate(models.Message{}, models.Chat{}, models.Application{})
 
 	services.SetupElasticSearch()
