@@ -84,6 +84,35 @@ class MessagesController < ApplicationController
       end
     end
 
+    def search
+      application = Application.find_by(token: params[:application_token])
+      unless application
+        render json: { error: "Application not found" }, status: :not_found
+        return
+      end
+
+      chat = application.chats.find_by(number: params[:chat_number])
+      unless chat
+        render json: { error: "Chat not found" }, status: :not_found
+        return
+      end
+
+      query = params[:query]
+      unless query.present?
+        render json: { error: "Search query is required" }, status: :bad_request
+        return
+      end
+
+      begin
+        results = Message.search_in_chat(chat.id, query).records
+        render json: results, each_serializer: MessageSerializer, status: :ok
+      rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+        render json: { error: "Invalid search query" }, status: :bad_request
+      rescue => e
+        render json: { error: "An error occurred during the search" }, status: :internal_server_error
+      end
+    end
+
     private
 
     def message_params

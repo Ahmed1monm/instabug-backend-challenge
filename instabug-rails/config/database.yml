@@ -14,9 +14,9 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: admin
+  password: password
   host: 127.0.0.1
-  database: admin
+  database: instabug
 
 development:
   <<: *default
@@ -24,9 +24,9 @@ development:
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: admin
+  password: password
   host: 127.0.0.1
-  database: admin
+  database: instabug
 
 
 # Warning: The database defined as "test" will be erased and
@@ -38,9 +38,9 @@ test:
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: admin
+  password: password
   host: 127.0.0.1
-  database: admin_test
+  database: instabug_test
 
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -69,7 +69,7 @@ production:
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: admin
+  password: password
   host: 127.0.0.1
-  database: admin_production
+  database: instabug_production
 

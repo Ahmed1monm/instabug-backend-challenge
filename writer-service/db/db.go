@@ -1,8 +1,10 @@
-package models
+package db
 
 import (
-	"gorm.io/gorm"
 	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+
+	"writer-service/models"
 )
 
 var DB *gorm.DB
@@ -20,5 +22,5 @@ func InitDB(dbName string) *gorm.DB {
 }
 
 func Migrate() {
-	DB.AutoMigrate(&Application{}, &Chat{}, &Message{})
+	DB.AutoMigrate(&models.Application{}, &models.Chat{}, &models.Message{})
 }

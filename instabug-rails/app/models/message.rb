@@ -1,18 +1,37 @@
 class Message < ApplicationRecord
-  belongs_to :chat
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
-  # include Elasticsearch::Model
-  # include Elasticsearch::Model::Callbacks
+  belongs_to :chat
 
   validates :body, presence: true
   validates :number, presence: true, uniqueness: { scope: :chat_id }
 
   before_validation :generate_number, on: :create
 
-  # # Customize the JSON serialization for Elasticsearch
-  # def as_indexed_json(options = {})
-  #   as_json(only: [ :body, :number, :chat_id ])
-  # end
+  def self.search_in_chat(chat_id, query)
+    search({
+      query: {
+        bool: {
+          must: [
+            { match: { body: query } },
+            { term: { chat_id: chat_id } }
+          ]
+        }
+      }
+    })
+  end
+
+  settings index: { number_of_shards: 1 } do
+    mappings dynamic: 'false' do
+      indexes :body, type: 'text', analyzer: 'english'
+      indexes :chat_id, type: 'keyword'
+    end
+  end
+
+  def as_indexed_json(options = {})
+    as_json(only: [:body, :chat_id, :number])
+  end
 
   private
 
