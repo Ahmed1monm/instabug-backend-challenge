@@ -75,12 +75,27 @@ class MessagesController < ApplicationController
 
     def update
       application = Application.find_by(token: params[:application_token])
-      chat = application.chats.find_by(number: params[:chat_number]) if application
-      @message = chat.messages.find_by(number: params[:message_number]) if chat
-      if @message && @message.update(message_params)
+      unless application
+        render json: { error: "Application not found" }, status: :not_found
+        return
+      end
+
+      chat = application.chats.find_by(number: params[:chat_number])
+      unless chat
+        render json: { error: "Chat not found" }, status: :not_found
+        return
+      end
+
+      @message = chat.messages.find_by(number: params[:message_number])
+      unless @message
+        render json: { error: "Message not found" }, status: :not_found
+        return
+      end
+
+      if @message.update(message_params)
         render json: @message, status: :ok
       else
-        render json: @message.errors, status: :unprocessable
+        render json: @message.errors, status: :unprocessable_entity
       end
     end
 

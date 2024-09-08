@@ -21,7 +21,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	db.InitDB("instabug")
-	db.Migrate()
+	// db.Migrate()
 
 	services.SetupRedis()
 	queue.SetupQueue()
