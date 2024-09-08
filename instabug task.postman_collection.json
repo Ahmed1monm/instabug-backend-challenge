@@ -1,0 +1,490 @@
+{
+	"info": {
+		"_postman_id": "726174a3-3ae3-4c56-bbd4-0a7dd949a1bc",
+		"name": "instabug task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25042739"
+	},
+	"item": [
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/applications",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/applications/:token",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "482102476955c932a9918ae495fb0e1a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"application\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"for testing accross all end points\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "482102476955c932a9918ae495fb0e1a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chats",
+			"item": [
+				{
+					"name": "get all for app",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/applications/:id/chats/:number",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":id",
+								"chats",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"for testing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"monem updated 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats/:number",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "482102476955c932a9918ae495fb0e1a"
+								},
+								{
+									"key": "number",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "message",
+			"item": [
+				{
+					"name": "get all for chat",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats/:number/messages",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats",
+								":number",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/applications/:id/chats/:chat_number/messages/:number",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":id",
+								"chats",
+								":chat_number",
+								"messages",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								},
+								{
+									"key": "chat_number",
+									"value": "1"
+								},
+								{
+									"key": "number",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": {\n        \"body\": \"message\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:id/chats/:chat_number/messages/search",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":id",
+								"chats",
+								":chat_number",
+								"messages",
+								"search"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "00eeea2660581f69e8e60854dd15fdcb"
+								},
+								{
+									"key": "chat_number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"after refactor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats/:number/messages",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats",
+								":number",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"body\": \"monem updatesdd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/applications/:token/chats/:chat_number/messages/:number",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"applications",
+								":token",
+								"chats",
+								":chat_number",
+								"messages",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "2cdf3fb7ec11c9becf7ef90dde342e13"
+								},
+								{
+									"key": "chat_number",
+									"value": "1"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "localhost:4000",
+			"type": "string"
+		}
+	]
+}
