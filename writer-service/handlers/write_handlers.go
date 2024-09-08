@@ -94,7 +94,7 @@ func CreateMessage(c echo.Context) error {
 		messageNumber = lastMessage.Number + 1
 
 		message = models.Message{
-			ChatID: chat.ID,
+			ChatID: uint(chat.ID),
 			Number: messageNumber,
 			Body:   c.FormValue("body"),
 		}

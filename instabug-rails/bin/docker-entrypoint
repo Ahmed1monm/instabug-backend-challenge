@@ -8,55 +8,5 @@ fi
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   ./bin/rails db:prepare
+  ./bin/rails server -b 0.0.0.0
 fi
-
-# # Remove redundant set -e as it's already set in the shebang
-# # set -e
-
-# # Check if we have at least one argument
-# if [ $# -eq 0 ]; then
-#   echo "Error: No arguments provided"
-#   exit 1
-# fi
-
-# host="$db"
-# shift
-# cmd="$@"
-
-# # Check if host is provided
-# if [ -z "$host" ]; then
-#   echo "Error: Host not provided"
-#   exit 1
-# fi
-
-# until nc -z "$host" 3306; do
-#   echo "Waiting for MySQL to be ready..."
-#   sleep 1
-# done
-
-# echo "MySQL is ready! Executing command: $cmd"
-# exec $cmd
-
-# Remove redundant exec
-# exec "${@}"
-
-# count=0
-# alive="no"
-# while [ "$count" -lt 5 ]; do
-#     docker-compose exec -T db mysqladmin ping --silent > /dev/null
-#     if [ $? -eq 0 ]; then
-#         alive="yes"
-#         break
-#     fi
- 
-#     echo "waiting for mysql"
-#     sleep 5
-#     count=$((count+1))
-# done
- 
-# if [ "$alive" = "yes" ]; then
-#     exit 0
-# else
-#     echo "MySQL did not start up in time"
-#     exit 1
-# fi

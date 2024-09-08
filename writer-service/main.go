@@ -15,7 +15,7 @@ import (
 func main() {
 	e := echo.New()
 
-	fmt.Fprint(e.Logger.Output(), "Hello, World!")
+	fmt.Fprint(e.Logger.Output(), "Hello, World!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())

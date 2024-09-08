@@ -16,6 +16,8 @@ services:
       REDIS_URL: redis://redis:6379/0
       DATABASE_URL: mysql2://root:password@db/instabug_rails_development
       ELASTICSEARCH_URL: http://elasticsearch:9200
+      RAILS_ENV: production
+      SECRET_KEY_BASE: 6ea5ab12d212c45475af6ac7e1d72e018e401eff9357549196e23cc456df31336f138c994fa911bb77a3a65ad50c0919bdbc76b18b3b9bab42e59d1556fa489b
 
 
   db:
@@ -53,8 +55,6 @@ services:
     build:
       context: writer-service
       dockerfile: Dockerfile
-    volumes:
-      - writer_service_data:/app
     ports:
       - "8080:8080"
     depends_on:
@@ -64,7 +64,7 @@ services:
       - app
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
-      DATABASE_URL: mysql2://root:password@db/instabug
+      DATABASE_URL: mysql://root:password@db/instabug
       REDIS_URL: redis:6379/0
 
 
@@ -93,34 +93,17 @@ services:
       DATABASE_URL: mysql://root:password@db/instabug
 
 
-  worker2:
-    build:
-      context: worker
-      dockerfile: Dockerfile
-    command: go run main.go
-    depends_on:
-      - db
-      - redis
-      - writer-service
-      - app
-    environment:
-      REDIS_URL: redis:6379
-      DATABASE_URL: mysql://root:password@db/instabug
-
-
   nginx:
     image: nginx:latest
     ports:
       - "4000:4000"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - writer-service
       - worker1
-      - worker2
 
 volumes:
   db_data:
   redis_data:
   elasticsearch_data:
-  writer_service_data:

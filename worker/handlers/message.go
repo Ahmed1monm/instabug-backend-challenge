@@ -48,8 +48,8 @@ func HandleMessageCreate(ctx context.Context, t *asynq.Task) error {
 	}
 
 	tx := db.DB.Create(&models.Message{
-		ID:     id,
-		ChatID: chatId,
+		ID:     uint64(id),
+		ChatID: uint64(chatId),
 		Body:   p.Content,
 		Number: p.Number,
 	})
