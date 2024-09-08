@@ -3,11 +3,11 @@ package db
 import (
 	"fmt"
 	"os"
+
 	// "time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
 	// "worker/models"
 )
 
@@ -29,6 +29,8 @@ func InitDB(dbName string) *gorm.DB {
 		fmt.Println("Error connecting to database: ", err)
 		panic("Error connecting to database")
 	}
+
+	fmt.Println("Connected to database")
 
 	DB = db
 	return db

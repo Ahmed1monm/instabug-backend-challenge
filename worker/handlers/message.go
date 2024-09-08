@@ -4,11 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"strconv"
 	"time"
-	"worker/db"
-	"worker/models"
 	"worker/services"
 
 	"github.com/hibiken/asynq"
@@ -35,32 +31,8 @@ func HandleMessageCreate(ctx context.Context, t *asynq.Task) error {
 		return fmt.Errorf("json.Unmarshal failed: %v: %w", err, asynq.SkipRetry)
 	}
 
-	id, err := strconv.ParseUint(p.ID, 10, 64)
-
-	if err != nil {
-		return fmt.Errorf("strconv.ParseInt failed: %v: %w", err, asynq.SkipRetry)
-	}
-
-	chatId, err := strconv.ParseUint(p.ChatID, 10, 64)
-
-	if err != nil {
-		return fmt.Errorf("strconv.ParseInt failed: %v: %w", err, asynq.SkipRetry)
-	}
-
-	tx := db.DB.Create(&models.Message{
-		ID:     uint64(id),
-		ChatID: uint64(chatId),
-		Body:   p.Content,
-		Number: p.Number,
-	})
-
 	customElasticSearchKey := fmt.Sprintf("%s-%s-%s", p.ApplicationToken, p.ChatID, p.ID)
 	services.Index(customElasticSearchKey, []byte(p.Content))
-
-	if tx.Error != nil {
-		log.Printf("Message creation failed: %v", tx.Error)
-		return fmt.Errorf("db.DB.Create failed: %v: %w", tx.Error, asynq.SkipRetry)
-	}
 
 	return nil
 }

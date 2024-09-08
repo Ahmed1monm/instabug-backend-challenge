@@ -72,6 +72,16 @@ func CreateMessage(c echo.Context) error {
 		})
 	}
 
+	type RequestPayload struct {
+		Body string `json:"body"`
+	}
+
+	var payload RequestPayload
+
+	if err := c.Bind(&payload); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request payload"})
+	}
+
 	var app models.Application
 
 	if err := db.DB.First(&app, "token = ?", token).Error; err != nil {
@@ -96,7 +106,7 @@ func CreateMessage(c echo.Context) error {
 		message = models.Message{
 			ChatID: uint(chat.ID),
 			Number: messageNumber,
-			Body:   c.FormValue("body"),
+			Body:   payload.Body,
 		}
 		if err := tx.Create(&message).Error; err != nil {
 			return err

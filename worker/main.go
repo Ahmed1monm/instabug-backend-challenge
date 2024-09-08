@@ -5,7 +5,6 @@ import (
 	"os"
 	"worker/db"
 	"worker/handlers"
-	"worker/models"
 	"worker/services"
 
 	"github.com/hibiken/asynq"
@@ -20,7 +19,7 @@ func main() {
 	log.Println("Worker started")
 
 	db.InitDB("instabug")
-	db.Migrate(models.Application{}, models.Chat{}, models.Message{})
+	// db.Migrate(models.Application{}, models.Chat{}, models.Message{})
 
 	services.SetupElasticSearch()
 

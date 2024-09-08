@@ -66,7 +66,7 @@ services:
     restart: always
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
-      DATABASE_URL: root:password@tcp(db:3306)/instabug
+      DATABASE_URL: root:password@tcp(db:3306)/instabug?parseTime=true
       REDIS_URL: redis:6379
 
   monitor:
@@ -91,7 +91,7 @@ services:
       - app
     environment:
       REDIS_URL: redis:6379
-      DATABASE_URL: root:password@tcp(db:3306)/instabug
+      DATABASE_URL: root:password@tcp(db:3306)/instabug?parseTime=true
 
 
   nginx:
