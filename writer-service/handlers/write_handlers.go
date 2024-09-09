@@ -18,6 +18,12 @@ import (
 
 func CreateChat(c echo.Context) error {
 	token := c.Param("token")
+	var payload struct {
+		Name string `json:"name"`
+	}
+	if err := c.Bind(&payload); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+	}
 
 	var app models.Application
 
@@ -43,6 +49,7 @@ func CreateChat(c echo.Context) error {
 		chat = models.Chat{
 			ApplicationID: app.ID,
 			Number:        chatNumber,
+			Name:          payload.Name,
 		}
 		if err := tx.Create(&chat).Error; err != nil {
 			return err
@@ -59,7 +66,7 @@ func CreateChat(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to create chat"})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]int64{"number": chat.Number})
+	return c.JSON(http.StatusCreated, map[string]interface{}{"number": chat.Number, "name": chat.Name})
 }
 
 func CreateMessage(c echo.Context) error {

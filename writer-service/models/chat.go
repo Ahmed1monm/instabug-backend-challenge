@@ -9,6 +9,7 @@ type Chat struct {
 	Messages      []Message `gorm:"foreignKey:ChatID"`
 	Number        int64     `gorm:"uniqueIndex:idx_app_chat_number,priority:2"`
 	ApplicationID uint64    `gorm:"uniqueIndex:idx_app_chat_number,priority:1"`
+	Name          string
 
 	CreatedAt time.Time
 	UpdatedAt time.Time

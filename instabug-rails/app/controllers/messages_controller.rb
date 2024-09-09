@@ -123,8 +123,8 @@ class MessagesController < ApplicationController
         render json: results, each_serializer: MessageSerializer, status: :ok
       rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
         render json: { error: "Invalid search query" }, status: :bad_request
-      rescue => e
-        render json: { error: "An error occurred during the search" }, status: :internal_server_error
+      rescue StandardError => e
+        render json: { error: "An error occurred during the search: #{e.message}" }, status: :internal_server_error
       end
     end
 

@@ -23,9 +23,9 @@ class Message < ApplicationRecord
   end
 
   settings index: { number_of_shards: 1 } do
-    mappings dynamic: 'false' do
-      indexes :body, type: 'text', analyzer: 'english'
-      indexes :chat_id, type: 'keyword'
+    mappings dynamic: "false" do
+      indexes :body, type: "text", analyzer: "english"
+      indexes :chat_id, type: "keyword"
     end
   end
 
